@@ -1,0 +1,34 @@
+YAML(.yml) VS .properties file in Java Spring Boot application:
+
+1) 	.properties file: stores data in sequential format.
+	.yml file: stores data in hierarchical format.
+
+2) 	.properties file: 	supports only key-value pair basically string values.
+						While retrieving the values from .properties files we get strings regardless of
+						what the actual value type is in the configuration
+	.yml file:  supports key-value pair as well as map, list & scalar type values (int, string etc.)
+				While in case of the .yml file we get the value as whatever the respective type (int,
+				string etc.) is in the configuration
+
+3) 	.properties file: This file specifically used for Java.
+	.yml file:  This file type are used by many of the languages like Java, Python, ROR, etc.
+				If you have ever used Elastic Search instance and MongoDB database,
+				both of these applications use YAML (.yml) as their default configuration format.
+
+4)	If you want to handle multiple profiles:
+	.properties file:	you need to manage individual file for each profile. 
+	.yml file: 		  	In this file type you just need to manage single file and place configuration data of 
+						specific profile inside it.
+
+5) 	For Spring Boot project: 
+	.properties file: 	@PropertySource annotation support this file type 
+	.yml file: 			YAML file can’t be loaded via the @PropertySource annotation. 
+						In the case that you need to load values this way, you need to use a .properties file
+	
+The .yml file is advantageous over the .properties file as it has type safety, hierarchy and supports list. 
+
+One advantage that you may see out of using the YAML (.yml) file is when you are using more than one
+application that read the same configuration file
+
+Specification (spec) of YAML can be found here : https://yaml.org/spec/
+The .properties file doesn’t really actually have a spec. The closest thing it has to a spec is the javadoc.

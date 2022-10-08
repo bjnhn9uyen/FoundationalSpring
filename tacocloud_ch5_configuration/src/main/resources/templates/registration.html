@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Taco Cloud</title>
+<link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+	<h1>Register</h1>
+	<img th:src="@{/images/TacoCloud.png}" />
+
+	<form method="POST" th:object="${reg}" th:action="@{/register}" id="registerForm">
+		<!-- the th:action attribute is all you need for Thymeleaf to render the hidden field with 
+		the CSRF token in a request attribute -->
+
+		<label for="username">Username: </label>
+		<input type="text" th:field="*{username}" />
+		<span class="validationError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">User
+			Name Error</span> <br />
+		<label for="password">Password: </label>
+		<input type="password" th:field="*{password}" />
+		<span class="validationError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password
+			Error</span> <br />
+		<label for="confirm">Confirm password: </label>
+		<input type="password" th:field="*{pwConfirm}" />
+		<span class="validationError" th:if="${#fields.hasErrors('pwConfirm')}" th:errors="*{pwConfirm}">Password
+			Confirmation Error</span> <br />
+		<label for="fullname">Full name: </label>
+		<input type="text" name="fullname" />
+		<br />
+		<label for="street">Street: </label>
+		<input type="text" name="street" />
+		<br />
+		<label for="city">City: </label>
+		<input type="text" name="city" />
+		<br />
+		<label for="state">State: </label>
+		<input type="text" name="state" />
+		<br />
+		<label for="zip">ZIP: </label>
+		<input type="text" name="zip" />
+		<br />
+		<label for="phone">Phone: </label>
+		<input type="text" th:field="*{phone}" />
+		<span class="validationError" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Number
+			Error</span> <br />
+
+		<input type="submit" value="Register" />
+	</form>
+
+</body>
+</html>

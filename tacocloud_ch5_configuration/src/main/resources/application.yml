@@ -1,0 +1,90 @@
+# configuration properties are nothing more than properties of beans
+server:
+  port: 8080 # default
+
+spring:
+  thymeleaf:
+    cache: false
+  jpa:
+    show-sql: true
+    
+# using default security, but you can configure username and password
+# instead of keep looking at the server’s logs for the randomly generated password
+#  security:
+#    user:
+#      name: user0000
+#      password: aA@00000
+  
+# activating Spring profiles, see Spring profiles down below, after three hyphens ---
+#  profiles:
+#    active:
+#      - prod
+  
+# specifying the database initial scripts (in the resources folder) to run when the application starts
+#  datasource:
+#    initialization-mode: always
+#    schema:
+#      - classpath:order-schema.sql
+#      - classpath:ingredient-schema.sql
+#      - classpath:taco-schema.sql
+#      - classpath:user-schema.sql
+#    data:
+#      - classpath:ingredients.sql
+
+# By default, Spring Boot configures logging via Logback to write to the console at an INFO level
+# For full control over the logging configuration, you have to create a logback.xml file
+# The most common changes you’ll make to a logging configuration are to change the logging levels
+# and to specify a file where the logs should be written.
+# With Spring Boot configuration, you can make those changes without having to create a logback.xml file
+#logging:
+#  suppose that you want to write the log entries to the file TacoCloud.log at /logs/
+#  file:
+#    path: /logs/TacoCloud.log
+#  suppose you’d like to set the root logging level to WARN, but log Spring Security logs at a DEBUG level
+#  level:
+#    root: WARN
+#    org.springframework.security: DEBUG
+
+# To create metadata for your custom configuration properties,
+# you’ll need to create a JSON file under META-INF/additional-spring-configuration-metadata.json
+# To see what the property is used for and how to use it, hover the mouse over the property
+taco:
+  orders:
+    pageSize: 5
+  discount:
+    codes:
+      abcdef: 10
+
+# Spring profiles
+# For example, for development and debugging purposes, you want to use the embedded H2 database,
+# and you want the logging to be set to DEBUG.
+# But in production, you want to use an external MySQL database and set the logging levels to WARN.
+# What you need is to define a profile with properties suited for production.
+# One way to define profile-specific properties is to create yet another YAML 
+# or properties file containing only the properties for production.
+# Another way (works only with YAML) is placing profile-specific properties alongside non-profiled properties 
+# separated by three hyphens and the use spring.profiles property to name the profile. 
+---
+# All configs below OVERRIDE the default’s configs, not REPLACE the whole default. 
+# The rest of default’s configs (not overridden) still remain active
+spring:
+  profiles: prod
+  
+# If this profile is active, the data-source properties will be set to use the external MySQL database 
+# instead of H2 database, comment out url, username, and password to use H2 database in the ‘prod’ profile
+  datasource:
+    url: jdbc:mysql://localhost/tacocloud
+    username: root
+    password: admin
+    initialization-mode: always
+    data:
+      - classpath:ingredients.sql # folder target/classes
+      
+  jpa:
+    generate-ddl: true
+    hibernate.ddl-auto: create
+   
+# Likewise, the ‘logging.level.tacos’ property will be overridden with WARN instead of DEBUG (default profile)
+logging:
+  level:
+    tacos: WARN    
